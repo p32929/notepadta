@@ -10,7 +10,7 @@ export const state: State = {
   counter: 0,
   tabs: [
     {
-      tabName: "Tab1",
+      tabName: "tab1",
       tabContent: "some texts",
     },
   ],
