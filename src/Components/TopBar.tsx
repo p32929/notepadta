@@ -38,11 +38,15 @@ const TopBar: React.FC<Props> = (props) => {
         console.log("Saved");
     }
 
+    const onSettingsPressed = () => {
+        alert("Coming soon")
+    }
+
     return <AppBar>
         <Toolbar>
             <Typography style={{ flexGrow: 1 }}>Notepadta</Typography>
 
-            <IconButton>
+            <IconButton onClick={onSettingsPressed}>
                 <SvgHelper path={IconPaths.cog} color='white' />
             </IconButton>
 
