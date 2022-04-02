@@ -12,3 +12,13 @@ export const addTab = ({ state }: Context, value: ITab) => {
 export const setTabIndex = ({ state }: Context, value: number) => {
   state.currentTabIndex = value;
 };
+
+export const deleteTabIndex = ({ state }: Context) => {
+  state.tabs = state.tabs.filter((item, index) => {
+    return index !== state.currentTabIndex;
+  });
+};
+
+export const changeTabName = ({ state }: Context, value: string) => {
+  state.tabs[state.currentTabIndex].tabName = value;
+};

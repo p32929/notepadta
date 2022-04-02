@@ -34,12 +34,20 @@ const App: React.FC<Props> = (props) => {
         >
           {
             states.tabs.map((item, index) => {
-              return <Tab label={item.tabName} style={{
-                backgroundColor: states.currentTabIndex == index ? '#388E3C' : 'white',
-                color: states.currentTabIndex == index ? 'white' : 'black',
-              }} onClick={(e) => {
-                actions.setTabIndex(index)
-              }} />
+              return <Tab
+                label={item.tabName}
+                style={{
+                  backgroundColor: states.currentTabIndex == index ? '#388E3C' : 'white',
+                  color: states.currentTabIndex == index ? 'white' : 'black',
+                }}
+                onClick={(e) => {
+                  actions.setTabIndex(index)
+                }}
+                onDoubleClick={() => {
+                  let newName = prompt("New tab name") ?? "...::: :::..."
+                  actions.changeTabName(newName)
+                }}
+              />
             })
           }
         </Tabs>

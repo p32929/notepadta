@@ -11,7 +11,7 @@ export const state: State = {
   tabs: [
     {
       tabName: "tab1",
-      tabContent: "some texts",
+      tabContent: "",
     },
   ],
   currentTabIndex: 0,

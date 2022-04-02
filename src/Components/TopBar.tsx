@@ -28,10 +28,14 @@ const TopBar: React.FC<Props> = (props) => {
         })
     }
 
+    const onDeletePressed = () => {
+        actions.deleteTabIndex()
+    }
+
     return <AppBar>
         <Toolbar>
             <Typography style={{ flexGrow: 1 }}>Notepadta</Typography>
-            <IconButton>
+            <IconButton onClick={onDeletePressed}>
                 <SvgHelper path={IconPaths.delete} color='white' />
             </IconButton>
             <IconButton>
