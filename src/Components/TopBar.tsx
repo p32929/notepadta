@@ -23,14 +23,20 @@ const TopBar: React.FC<Props> = (props) => {
 
     const onPlusPressed = () => {
         actions.addTab({
-            tabName: `tab${states.tabs.length + 1}`,
-            tabContent: `tab${states.tabs.length + 1}`,
+            tabName: `...::: :::...`,
+            tabContent: '',
         })
     }
 
     return <AppBar>
         <Toolbar>
             <Typography style={{ flexGrow: 1 }}>Notepadta</Typography>
+            <IconButton>
+                <SvgHelper path={IconPaths.delete} color='white' />
+            </IconButton>
+            <IconButton>
+                <SvgHelper path={IconPaths.save} color='white' />
+            </IconButton>
             <IconButton>
                 <SvgHelper path={IconPaths.cog} color='white' />
             </IconButton>
