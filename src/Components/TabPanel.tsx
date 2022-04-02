@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Grid, makeStyles, TextField, Theme } from "@material-ui/core";
+import { Box, Divider, Grid, makeStyles, TextField, Theme } from "@material-ui/core";
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -43,7 +43,6 @@ export default function TabPanel(props: TabPanelProps) {
                             
                         </Grid>
                         <TextField
-                            className='something'
                             fullWidth
                             minRows={Math.ceil(window.innerHeight / 19) - 4}
                             id='tests'
