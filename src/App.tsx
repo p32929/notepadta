@@ -58,8 +58,10 @@ const App: React.FC<Props> = (props) => {
                   actions.setTabIndex(index)
                 }}
                 onDoubleClick={() => {
-                  let newName = prompt("New tab name") ?? "...::: :::..."
-                  actions.changeTabName(newName)
+                  let newName = prompt("New tab name")
+                  if (newName) {
+                    actions.changeTabName(newName)
+                  }
                 }}
               />
             })
