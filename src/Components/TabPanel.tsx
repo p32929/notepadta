@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, makeStyles, TextField, Theme } from "@material-ui/core";
+import { Box, Grid, makeStyles, TextField, Theme } from "@material-ui/core";
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -38,19 +38,24 @@ export default function TabPanel(props: TabPanelProps) {
         >
             {value === index && (
                 <Box p={3} >
-                    <TextField
-                        className='something'
-                        fullWidth
-                        rows={Math.ceil(window.innerHeight / 19) - 4}
-                        id='tests'
-                        placeholder="Search..."
-                        InputProps={{
-                            disableUnderline: true,
-                            style: {
-                                alignItems: 'flex-start',
-                            }
-                        }}
-                        multiline={true} />
+                    <Grid container direction='column'>
+                        <Grid container direction='row'>
+                            
+                        </Grid>
+                        <TextField
+                            className='something'
+                            fullWidth
+                            minRows={Math.ceil(window.innerHeight / 19) - 4}
+                            id='tests'
+                            placeholder="Search..."
+                            InputProps={{
+                                disableUnderline: true,
+                                style: {
+                                    alignItems: 'flex-start',
+                                }
+                            }}
+                            multiline={true} />
+                    </Grid>
                 </Box>
             )}
         </div>
