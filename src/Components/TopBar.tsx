@@ -42,7 +42,7 @@ const TopBar: React.FC<Props> = (props) => {
         alert("Coming soon")
     }
 
-    return <AppBar>
+    return <AppBar id='toolbar'>
         <Toolbar>
             <Typography variant='h6' style={{ flexGrow: 1 }}>Notepadta</Typography>
 

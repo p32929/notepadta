@@ -30,6 +30,11 @@ const App: React.FC<Props> = (props) => {
     }
   }, [])
 
+  const getTabsMaxHeight = () => {
+    var a = document.getElementById('toolbar') ?? { clientHeight: 0 }
+    return window.innerHeight - (a?.clientHeight + 16)
+  }
+
   return <Grid container direction='column'>
     <TopBar />
     <AppBarOffset />
@@ -40,6 +45,10 @@ const App: React.FC<Props> = (props) => {
           orientation="vertical"
           variant="scrollable"
           value={states.currentTabIndex}
+          style={{
+            height: getTabsMaxHeight(),
+            maxHeight: getTabsMaxHeight(),
+          }}
           TabIndicatorProps={{
             style: {
               display: "none",
