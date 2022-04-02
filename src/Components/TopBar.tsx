@@ -44,7 +44,7 @@ const TopBar: React.FC<Props> = (props) => {
 
     return <AppBar>
         <Toolbar>
-            <Typography style={{ flexGrow: 1 }}>Notepadta</Typography>
+            <Typography variant='h6' style={{ flexGrow: 1 }}>Notepadta</Typography>
 
             <IconButton onClick={onSettingsPressed}>
                 <SvgHelper path={IconPaths.cog} color='white' />
