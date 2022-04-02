@@ -31,6 +31,10 @@ export default function TabPanel(props: TabPanelProps) {
     const actions = useActions()
     const states = useAppState()
 
+    const onChange = (e) => {
+        actions.setTabContent(e.target.value);
+    }
+
     return (
         <div
             role="tabpanel"
@@ -43,7 +47,6 @@ export default function TabPanel(props: TabPanelProps) {
                     <TextField
                         fullWidth
                         minRows={Math.ceil(window.innerHeight / 19) - 8}
-                        id='tests'
                         placeholder="Write your story..."
                         InputProps={{
                             disableUnderline: true,
@@ -53,6 +56,7 @@ export default function TabPanel(props: TabPanelProps) {
                         }}
                         multiline={true}
                         defaultValue={states.tabs[states.currentTabIndex].tabContent}
+                        onChange={onChange}
                     />
                 </Box>
             )}
