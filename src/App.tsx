@@ -6,6 +6,7 @@ import TabPanel from './Components/TabPanel';
 import TopBar from './Components/TopBar';
 import AppBarOffset from './Components/AppBarOffset';
 import { AppStorage } from './Others/AppStorage';
+import { Constants } from './Others/Constants';
 
 interface Props {
 
@@ -27,6 +28,11 @@ const App: React.FC<Props> = (props) => {
     let tabs = AppStorage.getAllValues()
     if (tabs.length > 0) {
       actions.setTabs(tabs)
+    }
+    else {
+      actions.setTabs([
+        Constants.startingTab
+      ])
     }
   }, [])
 

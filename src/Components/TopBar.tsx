@@ -37,13 +37,12 @@ const TopBar: React.FC<Props> = (props) => {
     }
 
     const onSavePressed = () => {
-        // @ts-ignore
-        var inputValue: any = document.getElementById('input_field')?.value
-        console.log(inputValue)
-        actions.setTabContent(inputValue)
-
-        // var tempTabs = states.tabs.slice()
-        // tempTabs[states.currentTabIndex].tabContent = inputValue
+        if (states.tabs.length > 0) {
+            // @ts-ignore
+            var inputValue = document.getElementById('input_field')?.value
+            console.log(inputValue)
+            actions.setTabContent(inputValue)
+        }
 
         AppStorage.saveAllValues(states.tabs)
         console.log("Saved");
