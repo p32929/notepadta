@@ -30,3 +30,15 @@ export const deleteTabIndex = ({ state }: Context) => {
 export const changeTabName = ({ state }: Context, value: string) => {
   state.tabs[state.currentTabIndex].tabName = value;
 };
+
+export const setButtonVisibilities = (
+  { state }: Context,
+  value: {
+    isReloadVisible: boolean;
+  }
+) => {
+  state.buttonVisibilities = {
+    ...state.buttonVisibilities,
+    ...value,
+  };
+};

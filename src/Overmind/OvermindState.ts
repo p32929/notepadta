@@ -4,9 +4,15 @@ import { ITab } from "../Others/Models";
 export interface State {
   tabs: Array<ITab>;
   currentTabIndex: number;
+  buttonVisibilities: {
+    isReloadVisible: boolean;
+  };
 }
 
 export const state: State = {
   tabs: [Constants.startingTab],
   currentTabIndex: 0,
+  buttonVisibilities: {
+    isReloadVisible: false,
+  },
 };

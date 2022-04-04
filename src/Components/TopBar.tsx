@@ -30,10 +30,21 @@ const TopBar: React.FC<Props> = (props) => {
     }
 
     const onDeletePressed = () => {
+        actions.setButtonVisibilities({
+            isReloadVisible: true
+        })
         actions.deleteTabIndex()
     }
 
     const onSavePressed = () => {
+        // @ts-ignore
+        var inputValue: any = document.getElementById('input_field')?.value
+        console.log(inputValue)
+        actions.setTabContent(inputValue)
+
+        // var tempTabs = states.tabs.slice()
+        // tempTabs[states.currentTabIndex].tabContent = inputValue
+
         AppStorage.saveAllValues(states.tabs)
         console.log("Saved");
     }
@@ -42,9 +53,19 @@ const TopBar: React.FC<Props> = (props) => {
         alert("Coming soon")
     }
 
+    const onReloadPressed = () => {
+        window.location.reload()
+    }
+
     return <AppBar id='toolbar'>
         <Toolbar>
             <Typography variant='h6' style={{ flexGrow: 1 }}>Notepadta</Typography>
+
+            {
+                states.buttonVisibilities.isReloadVisible && <IconButton onClick={onReloadPressed}>
+                    <SvgHelper path={IconPaths.reload} color='white' />
+                </IconButton>
+            }
 
             <IconButton onClick={onSettingsPressed}>
                 <SvgHelper path={IconPaths.cog} color='white' />
