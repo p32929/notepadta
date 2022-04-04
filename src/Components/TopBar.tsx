@@ -36,12 +36,13 @@ const TopBar: React.FC<Props> = (props) => {
         actions.setSnackbarText("Deleted")
     }
 
-    const onSave = () => {
+    const onSavePressed = () => {
         if (states.tabs.length > 0) {
             actions.setTabContent(AppUtils.getInputValue() ?? "")
         }
 
         AppStorage.saveAllValues(states.tabs)
+        actions.setSnackbarText("Saved")
     }
 
     const onSettingsPressed = () => {
@@ -60,17 +61,16 @@ const TopBar: React.FC<Props> = (props) => {
                 onPlusPressed()
                 return false;
             }
-
+            if (e.key == 's' && isCtrl == true) {
+                onSavePressed()
+                return false;
+            }
             if (e.key == 'd' && isCtrl == true) {
                 onDeletePressed()
                 return false;
             }
 
         }
-
-        AppUtils.onInactive(1000, () => {
-            onSave()
-        })
 
     }, [])
 
@@ -87,6 +87,12 @@ const TopBar: React.FC<Props> = (props) => {
             <Tooltip title="Delete ( Ctrl / Command + D )">
                 <IconButton onClick={onDeletePressed}>
                     <SvgHelper path={IconPaths.delete} color='white' />
+                </IconButton>
+            </Tooltip>
+
+            <Tooltip title="Save ( Ctrl / Command + S )">
+                <IconButton onClick={onSavePressed}>
+                    <SvgHelper path={IconPaths.save} color='white' />
                 </IconButton>
             </Tooltip>
 
