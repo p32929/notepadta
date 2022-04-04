@@ -32,31 +32,23 @@ const TopBar: React.FC<Props> = (props) => {
     }
 
     const onDeletePressed = () => {
-        actions.setButtonVisibilities({
-            isReloadVisible: true
-        })
         actions.deleteTabIndex()
         actions.setSnackbarText("Deleted")
     }
 
-    const onSavePressed = () => {
+    const onSave = (showSnack: boolean = true) => {
         if (states.tabs.length > 0) {
             actions.setTabContent(AppUtils.getInputValue() ?? "")
         }
-        actions.setButtonVisibilities({
-            isReloadVisible: false
-        })
 
         AppStorage.saveAllValues(states.tabs)
-        actions.setSnackbarText("Saved")
+
+        if (showSnack)
+            actions.setSnackbarText("Saved")
     }
 
     const onSettingsPressed = () => {
         actions.setSnackbarText("Coming soon")
-    }
-
-    const onReloadPressed = () => {
-        window.location.reload()
     }
 
     useEffect(() => {
@@ -71,29 +63,23 @@ const TopBar: React.FC<Props> = (props) => {
                 onPlusPressed()
                 return false;
             }
-            if (e.key == 's' && isCtrl == true) {
-                onSavePressed()
-                return false;
-            }
+
             if (e.key == 'd' && isCtrl == true) {
                 onDeletePressed()
                 return false;
             }
 
         }
+
+        AppUtils.onInactive(1000, () => {
+            onSave(false)
+        })
+
     }, [])
 
     return <AppBar id='toolbar'>
         <Toolbar>
             <Typography variant='h6' style={{ flexGrow: 1 }}>Notepadta</Typography>
-
-            {
-                states.buttonVisibilities.isReloadVisible && <Tooltip title="Delete">
-                    <IconButton onClick={onReloadPressed}>
-                        <SvgHelper path={IconPaths.reload} color='white' />
-                    </IconButton>
-                </Tooltip>
-            }
 
             <Tooltip title="Settings ( Coming soon )">
                 <IconButton onClick={onSettingsPressed}>
@@ -101,19 +87,13 @@ const TopBar: React.FC<Props> = (props) => {
                 </IconButton>
             </Tooltip>
 
-            <Tooltip title="Delete ( CTRL or COMMAND + D )">
+            <Tooltip title="Delete ( Ctrl / Command + D )">
                 <IconButton onClick={onDeletePressed}>
                     <SvgHelper path={IconPaths.delete} color='white' />
                 </IconButton>
             </Tooltip>
 
-            <Tooltip title="Save ( CTRL or COMMAND + S )">
-                <IconButton onClick={onSavePressed}>
-                    <SvgHelper path={IconPaths.save} color='white' />
-                </IconButton>
-            </Tooltip>
-
-            <Tooltip title="Add ( CTRL or COMMAND + 1 )">
+            <Tooltip title="Add new tab ( Ctrl / Command + 1 )">
                 <IconButton onClick={onPlusPressed}>
                     <SvgHelper path={IconPaths.plus} color='white' />
                 </IconButton>

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, Snackbar, Tab, Tabs, Theme } from "@material-ui/core";
+import { Grid, Snackbar, Tab, Tabs, Theme, Tooltip } from "@material-ui/core";
 import { useActions, useAppState } from './Overmind/OvermindHelper';
 import TabPanel from './Components/TabPanel';
 import TopBar from './Components/TopBar';
@@ -35,46 +35,47 @@ const App: React.FC<Props> = (props) => {
       ])
     }
 
-    }, [])
+  }, [])
 
-    const getTabsMaxHeight = () => {
-      var a = document.getElementById('toolbar') ?? { clientHeight: 0 }
-      return window.innerHeight - (a?.clientHeight + 16)
-    }
+  const getTabsMaxHeight = () => {
+    var a = document.getElementById('toolbar') ?? { clientHeight: 0 }
+    return window.innerHeight - (a?.clientHeight + 16)
+  }
 
-    return <Grid container direction='column'>
-      <TopBar />
-      <AppBarOffset />
+  return <Grid container direction='column'>
+    <TopBar />
+    <AppBarOffset />
 
-      <Snackbar
-        anchorOrigin={{ horizontal: 'center', vertical: 'bottom' }}
-        open={states.snackbarText != ""}
-        message={states.snackbarText}
-        autoHideDuration={1500}
-        onClose={() => {
-          actions.setSnackbarText("")
-        }}
-      />
+    <Snackbar
+      anchorOrigin={{ horizontal: 'center', vertical: 'bottom' }}
+      open={states.snackbarText != ""}
+      message={states.snackbarText}
+      autoHideDuration={1500}
+      onClose={() => {
+        actions.setSnackbarText("")
+      }}
+    />
 
-      <Grid container direction='row' style={{ marginTop: 8 }}>
-        <Grid item>
-          <Tabs
-            orientation="vertical"
-            variant="scrollable"
-            value={states.currentTabIndex}
-            style={{
-              height: getTabsMaxHeight(),
-              maxHeight: getTabsMaxHeight(),
-            }}
-            TabIndicatorProps={{
-              style: {
-                display: "none",
-              },
-            }}
-          >
-            {
-              states.tabs.map((item, index) => {
-                return <Tab
+    <Grid container direction='row' style={{ marginTop: 8 }}>
+      <Grid item>
+        <Tabs
+          orientation="vertical"
+          variant="scrollable"
+          value={states.currentTabIndex}
+          style={{
+            height: getTabsMaxHeight(),
+            maxHeight: getTabsMaxHeight(),
+          }}
+          TabIndicatorProps={{
+            style: {
+              display: "none",
+            },
+          }}
+        >
+          {
+            states.tabs.map((item, index) => {
+              return <Tooltip title="Double tap to rename">
+                <Tab
                   label={item.tabName}
                   style={{
                     backgroundColor: states.currentTabIndex == index ? '#4CAF50' : 'white',
@@ -87,29 +88,31 @@ const App: React.FC<Props> = (props) => {
                     let newName = prompt("New tab name")
                     if (newName) {
                       actions.changeTabName(newName)
+                      actions.setSnackbarText("Tab renamed")
                     }
                   }}
                 />
-              })
-            }
-          </Tabs>
-        </Grid>
-        <Grid container item xs>
-          {
-            states.tabs.map((item, index) => {
-              return <TabPanel
-                index={index}
-              >
-                {
-                  item.tabContent
-                }
-              </TabPanel>
+              </Tooltip>
             })
           }
-        </Grid>
-      </Grid >
-    </Grid>
+        </Tabs>
+      </Grid>
+      <Grid container item xs>
+        {
+          states.tabs.map((item, index) => {
+            return <TabPanel
+              index={index}
+            >
+              {
+                item.tabContent
+              }
+            </TabPanel>
+          })
+        }
+      </Grid>
+    </Grid >
+  </Grid>
 
-  }
+}
 
 export default App;

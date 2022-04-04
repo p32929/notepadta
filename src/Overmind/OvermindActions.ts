@@ -1,3 +1,4 @@
+import { Constants } from "../Others/Constants";
 import { ITab } from "../Others/Models";
 import { Context } from "./OvermindHelper";
 
@@ -25,22 +26,13 @@ export const deleteTabIndex = ({ state }: Context) => {
   if (state.currentTabIndex != 0) {
     state.currentTabIndex -= 1;
   }
+  if (state.tabs.length == 0) {
+    state.tabs = [Constants.startingTab];
+  }
 };
 
 export const changeTabName = ({ state }: Context, value: string) => {
   state.tabs[state.currentTabIndex].tabName = value;
-};
-
-export const setButtonVisibilities = (
-  { state }: Context,
-  value: {
-    isReloadVisible: boolean;
-  }
-) => {
-  state.buttonVisibilities = {
-    ...state.buttonVisibilities,
-    ...value,
-  };
 };
 
 export const setSnackbarText = ({ state }: Context, value: string) => {
