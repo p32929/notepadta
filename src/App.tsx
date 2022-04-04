@@ -34,81 +34,82 @@ const App: React.FC<Props> = (props) => {
         Constants.startingTab
       ])
     }
-  }, [])
 
-  const getTabsMaxHeight = () => {
-    var a = document.getElementById('toolbar') ?? { clientHeight: 0 }
-    return window.innerHeight - (a?.clientHeight + 16)
-  }
+    }, [])
 
-  return <Grid container direction='column'>
-    <TopBar />
-    <AppBarOffset />
+    const getTabsMaxHeight = () => {
+      var a = document.getElementById('toolbar') ?? { clientHeight: 0 }
+      return window.innerHeight - (a?.clientHeight + 16)
+    }
 
-    <Snackbar
-      anchorOrigin={{ horizontal: 'center', vertical: 'bottom' }}
-      open={states.snackbarText != ""}
-      message={states.snackbarText}
-      autoHideDuration={1500}
-      onClose={() => {
-        actions.setSnackbarText("")
-      }}
-    />
+    return <Grid container direction='column'>
+      <TopBar />
+      <AppBarOffset />
 
-    <Grid container direction='row' style={{ marginTop: 8 }}>
-      <Grid item>
-        <Tabs
-          orientation="vertical"
-          variant="scrollable"
-          value={states.currentTabIndex}
-          style={{
-            height: getTabsMaxHeight(),
-            maxHeight: getTabsMaxHeight(),
-          }}
-          TabIndicatorProps={{
-            style: {
-              display: "none",
-            },
-          }}
-        >
+      <Snackbar
+        anchorOrigin={{ horizontal: 'center', vertical: 'bottom' }}
+        open={states.snackbarText != ""}
+        message={states.snackbarText}
+        autoHideDuration={1500}
+        onClose={() => {
+          actions.setSnackbarText("")
+        }}
+      />
+
+      <Grid container direction='row' style={{ marginTop: 8 }}>
+        <Grid item>
+          <Tabs
+            orientation="vertical"
+            variant="scrollable"
+            value={states.currentTabIndex}
+            style={{
+              height: getTabsMaxHeight(),
+              maxHeight: getTabsMaxHeight(),
+            }}
+            TabIndicatorProps={{
+              style: {
+                display: "none",
+              },
+            }}
+          >
+            {
+              states.tabs.map((item, index) => {
+                return <Tab
+                  label={item.tabName}
+                  style={{
+                    backgroundColor: states.currentTabIndex == index ? '#4CAF50' : 'white',
+                    color: states.currentTabIndex == index ? 'white' : 'black',
+                  }}
+                  onClick={(e) => {
+                    actions.setTabIndex(index)
+                  }}
+                  onDoubleClick={() => {
+                    let newName = prompt("New tab name")
+                    if (newName) {
+                      actions.changeTabName(newName)
+                    }
+                  }}
+                />
+              })
+            }
+          </Tabs>
+        </Grid>
+        <Grid container item xs>
           {
             states.tabs.map((item, index) => {
-              return <Tab
-                label={item.tabName}
-                style={{
-                  backgroundColor: states.currentTabIndex == index ? '#4CAF50' : 'white',
-                  color: states.currentTabIndex == index ? 'white' : 'black',
-                }}
-                onClick={(e) => {
-                  actions.setTabIndex(index)
-                }}
-                onDoubleClick={() => {
-                  let newName = prompt("New tab name")
-                  if (newName) {
-                    actions.changeTabName(newName)
-                  }
-                }}
-              />
+              return <TabPanel
+                index={index}
+              >
+                {
+                  item.tabContent
+                }
+              </TabPanel>
             })
           }
-        </Tabs>
-      </Grid>
-      <Grid container item xs>
-        {
-          states.tabs.map((item, index) => {
-            return <TabPanel
-              index={index}
-            >
-              {
-                item.tabContent
-              }
-            </TabPanel>
-          })
-        }
-      </Grid>
-    </Grid >
-  </Grid>
+        </Grid>
+      </Grid >
+    </Grid>
 
-}
+  }
 
 export default App;
