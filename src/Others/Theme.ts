@@ -17,4 +17,11 @@ export const theme = createTheme({
             default: '#fff',
         },
     },
+    overrides: {
+        MuiTab: {
+            root: {
+                textTransform: 'none',
+            }
+        }
+    }
 });
