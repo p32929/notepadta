@@ -5,6 +5,7 @@ import { useActions, useAppState } from '../Overmind/OvermindHelper';
 import SvgHelper from './SvgHelper';
 import { IconPaths } from '../Others/IconPaths';
 import { AppStorage } from '../Others/AppStorage';
+import { AppUtils } from '../Others/AppUtils';
 
 interface Props {
 
@@ -27,6 +28,7 @@ const TopBar: React.FC<Props> = (props) => {
             tabName: `...::: :::...`,
             tabContent: '',
         })
+        actions.setSnackbarText("New tab added")
     }
 
     const onDeletePressed = () => {
@@ -34,22 +36,23 @@ const TopBar: React.FC<Props> = (props) => {
             isReloadVisible: true
         })
         actions.deleteTabIndex()
+        actions.setSnackbarText("Deleted")
     }
 
     const onSavePressed = () => {
         if (states.tabs.length > 0) {
-            // @ts-ignore
-            var inputValue = document.getElementById('input_field')?.value
-            console.log(inputValue)
-            actions.setTabContent(inputValue)
+            actions.setTabContent(AppUtils.getInputValue() ?? "")
         }
+        actions.setButtonVisibilities({
+            isReloadVisible: false
+        })
 
         AppStorage.saveAllValues(states.tabs)
-        console.log("Saved");
+        actions.setSnackbarText("Saved")
     }
 
     const onSettingsPressed = () => {
-        alert("Coming soon")
+        actions.setSnackbarText("Coming soon")
     }
 
     const onReloadPressed = () => {

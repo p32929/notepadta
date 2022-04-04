@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, Tab, Tabs, Theme } from "@material-ui/core";
+import { Grid, Snackbar, Tab, Tabs, Theme } from "@material-ui/core";
 import { useActions, useAppState } from './Overmind/OvermindHelper';
 import TabPanel from './Components/TabPanel';
 import TopBar from './Components/TopBar';
@@ -44,6 +44,16 @@ const App: React.FC<Props> = (props) => {
   return <Grid container direction='column'>
     <TopBar />
     <AppBarOffset />
+
+    <Snackbar
+      anchorOrigin={{ horizontal: 'center', vertical: 'bottom' }}
+      open={states.snackbarText != ""}
+      message={states.snackbarText}
+      autoHideDuration={1500}
+      onClose={() => {
+        actions.setSnackbarText("")
+      }}
+    />
 
     <Grid container direction='row' style={{ marginTop: 8 }}>
       <Grid item>

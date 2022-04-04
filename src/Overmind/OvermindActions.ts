@@ -42,3 +42,7 @@ export const setButtonVisibilities = (
     ...value,
   };
 };
+
+export const setSnackbarText = ({ state }: Context, value: string) => {
+  state.snackbarText = value;
+};

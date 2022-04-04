@@ -7,6 +7,7 @@ export interface State {
   buttonVisibilities: {
     isReloadVisible: boolean;
   };
+  snackbarText: string;
 }
 
 export const state: State = {
@@ -15,4 +16,5 @@ export const state: State = {
   buttonVisibilities: {
     isReloadVisible: false,
   },
+  snackbarText: "",
 };
