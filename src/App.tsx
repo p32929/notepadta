@@ -27,6 +27,8 @@ const App: React.FC<Props> = (props) => {
 
   useEffect(() => {
     let values = AppStorage.getAllValues()
+    console.log(values);
+    
     actions.setTabIndex(values.currentTabIndex)
     actions.setTabs(values.tabs)
 

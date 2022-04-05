@@ -1,3 +1,5 @@
+// @ts-nocheck
+import { Constants } from "./Constants";
 import { ITab } from "./Models";
 
 interface IValues {
@@ -6,6 +8,10 @@ interface IValues {
 }
 
 const TABS = "TABS";
+const dummyValues: IValues = {
+  currentTabIndex: 0,
+  tabs: [Constants.getStartingTab()],
+};
 
 export class AppStorage {
   static saveAllValues(values: IValues) {
@@ -14,13 +20,10 @@ export class AppStorage {
 
   static getAllValues(): IValues {
     let tabs = localStorage.getItem(TABS);
-    try {
-      return JSON.parse(tabs ?? "----");
-    } catch (e) {
-      return {
-        currentTabIndex: 0,
-        tabs: [],
-      };
+    var values: IValues = JSON.parse(tabs);
+    if (values.currentTabIndex && values.tabs) {
+      return values;
     }
+    return dummyValues;
   }
 }

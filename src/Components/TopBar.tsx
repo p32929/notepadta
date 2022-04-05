@@ -37,7 +37,6 @@ const TopBar: React.FC<Props> = (props) => {
     }
 
     const onSavePressed = () => {
-
         AppStorage.saveAllValues({
             tabs: states.tabs,
             currentTabIndex: states.currentTabIndex
