@@ -42,7 +42,6 @@ const TopBar: React.FC<Props> = (props) => {
         }
 
         AppStorage.saveAllValues(states.tabs)
-        console.log("Saved")
     }
 
     useEffect(() => {
