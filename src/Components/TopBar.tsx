@@ -36,13 +36,16 @@ const TopBar: React.FC<Props> = (props) => {
         actions.setSnackbarText("Deleted")
     }
 
-    const onSavePressed = () => {
+    const onSavePressed = (showSnack: boolean = true) => {
         if (states.tabs.length > 0) {
             actions.setTabContent(AppUtils.getInputValue() ?? "")
         }
 
         AppStorage.saveAllValues(states.tabs)
-        actions.setSnackbarText("Saved")
+        if (showSnack)
+            actions.setSnackbarText("Saved")
+
+        console.log("Saved")
     }
 
     const onSettingsPressed = () => {
@@ -69,8 +72,8 @@ const TopBar: React.FC<Props> = (props) => {
                 onDeletePressed()
                 return false;
             }
-
         }
+
 
     }, [])
 
@@ -78,25 +81,31 @@ const TopBar: React.FC<Props> = (props) => {
         <Toolbar>
             <Typography variant='h6' style={{ flexGrow: 1 }}>Notepadta</Typography>
 
-            <Tooltip title="Settings ( Coming soon )">
+            {/* <Tooltip title="Settings ( Coming soon )" arrow>
                 <IconButton onClick={onSettingsPressed}>
                     <SvgHelper path={IconPaths.cog} color='white' />
                 </IconButton>
+            </Tooltip> */}
+
+            <Tooltip title="Github ( Opens github repository )" arrow>
+                <IconButton target="_blank" href='https://github.com/p32929/notepadta'>
+                    <SvgHelper path={IconPaths.github} color='white' />
+                </IconButton>
             </Tooltip>
 
-            <Tooltip title="Delete ( Ctrl / Command + D )">
+            <Tooltip title="Delete ( Ctrl / Command + D )" arrow>
                 <IconButton onClick={onDeletePressed}>
                     <SvgHelper path={IconPaths.delete} color='white' />
                 </IconButton>
             </Tooltip>
 
-            <Tooltip title="Save ( Ctrl / Command + S )">
-                <IconButton onClick={onSavePressed}>
+            <Tooltip title="Save ( Ctrl / Command + S )" arrow>
+                <IconButton onClick={() => onSavePressed()}>
                     <SvgHelper path={IconPaths.save} color='white' />
                 </IconButton>
             </Tooltip>
 
-            <Tooltip title="Add new tab ( Ctrl / Command + 1 )">
+            <Tooltip title="Add new tab ( Ctrl / Command + 1 )" arrow>
                 <IconButton onClick={onPlusPressed}>
                     <SvgHelper path={IconPaths.plus} color='white' />
                 </IconButton>
