@@ -14,12 +14,6 @@
       "active": true,
       "targets": "all",
       "identifier": "com.tauri.dev",
-      "icon": [
-        "icons/favicon-32x32.png",
-        "icons/apple-icon-120x120.png",
-        "icons/apple-icon-120x120.png",
-        "icons/favicon.ico"
-      ],
       "resources": [],
       "externalBin": [],
       "copyright": "",
