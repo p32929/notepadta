@@ -74,7 +74,7 @@ const App: React.FC<Props> = (props) => {
         >
           {
             states.tabs.map((item, index) => {
-              return <Tooltip title="Double tap to rename">
+              return <Tooltip title="Double tap to rename" arrow> 
                 <Tab
                   label={item.tabName}
                   style={{
