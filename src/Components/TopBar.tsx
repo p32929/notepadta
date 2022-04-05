@@ -36,15 +36,12 @@ const TopBar: React.FC<Props> = (props) => {
         actions.setSnackbarText("Deleted")
     }
 
-    const onSavePressed = (showSnack: boolean = true) => {
+    const onSave = () => {
         if (states.tabs.length > 0) {
             actions.setTabContent(AppUtils.getInputValue() ?? "")
         }
 
         AppStorage.saveAllValues(states.tabs)
-        if (showSnack)
-            actions.setSnackbarText("Saved")
-
         console.log("Saved")
     }
 
@@ -72,7 +69,7 @@ const TopBar: React.FC<Props> = (props) => {
         }
 
         window.addEventListener("beforeunload", function (e) {
-            onSavePressed()
+            onSave()
         });
 
 
