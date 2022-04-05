@@ -78,12 +78,18 @@ const TopBar: React.FC<Props> = (props) => {
     }, [])
 
     return <AppBar id='toolbar'>
-        <Toolbar >
+        <Toolbar>
             <Typography variant='h6' style={{ flexGrow: 1 }}>Notepadta</Typography>
 
-            <Tooltip title="Settings ( Coming soon )" arrow>
+            {/* <Tooltip title="Settings ( Coming soon )" arrow>
                 <IconButton onClick={onSettingsPressed}>
                     <SvgHelper path={IconPaths.cog} color='white' />
+                </IconButton>
+            </Tooltip> */}
+
+            <Tooltip title="Github ( Opens github repository )" arrow>
+                <IconButton target="_blank" href='https://github.com/p32929/notepadta'>
+                    <SvgHelper path={IconPaths.github} color='white' />
                 </IconButton>
             </Tooltip>
 
