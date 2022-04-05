@@ -8,7 +8,7 @@ export interface State {
 }
 
 export const state: State = {
-  tabs: [Constants.startingTab],
+  tabs: [Constants.getStartingTab()],
   currentTabIndex: 0,
   snackbarText: "",
 };

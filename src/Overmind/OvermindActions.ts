@@ -31,7 +31,7 @@ export const deleteTabIndex = ({ state }: Context) => {
     state.currentTabIndex -= 1;
   }
   if (state.tabs.length == 0) {
-    state.tabs = [Constants.startingTab];
+    state.tabs = [Constants.getStartingTab()];
   }
 };
 

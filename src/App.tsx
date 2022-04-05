@@ -26,15 +26,9 @@ const App: React.FC<Props> = (props) => {
   const classes = useStyles();
 
   useEffect(() => {
-    let tabs = AppStorage.getAllValues()
-    if (tabs.length > 0) {
-      actions.setTabs(tabs)
-    }
-    else {
-      actions.setTabs([
-        Constants.startingTab
-      ])
-    }
+    let values = AppStorage.getAllValues()
+    actions.setTabIndex(values.currentTabIndex)
+    actions.setTabs(values.tabs)
 
     AppUtils.focusInput()
 

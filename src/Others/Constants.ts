@@ -1,8 +1,11 @@
 import { ITab } from "./Models";
 
 export class Constants {
-  static startingTab: ITab = {
-    tabName: "newtab",
-    tabContent: "",
-  };
+  static getStartingTab() {
+    var startingTab: ITab = {
+      tabName: "newtab",
+      tabContent: "",
+    };
+    return startingTab;
+  }
 }

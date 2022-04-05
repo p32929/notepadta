@@ -1,18 +1,26 @@
 import { ITab } from "./Models";
 
+interface IValues {
+  tabs: Array<ITab>;
+  currentTabIndex: number;
+}
+
 const TABS = "TABS";
 
 export class AppStorage {
-  static saveAllValues(tabs: Array<ITab>) {
-    localStorage.setItem(TABS, JSON.stringify(tabs));
+  static saveAllValues(values: IValues) {
+    localStorage.setItem(TABS, JSON.stringify(values));
   }
 
-  static getAllValues(): Array<ITab> {
+  static getAllValues(): IValues {
     let tabs = localStorage.getItem(TABS);
     try {
-      return JSON.parse(tabs ?? "[]");
+      return JSON.parse(tabs ?? "----");
     } catch (e) {
-      return [];
+      return {
+        currentTabIndex: 0,
+        tabs: [],
+      };
     }
   }
 }
