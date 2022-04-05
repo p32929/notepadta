@@ -5,6 +5,7 @@ const TABS = "TABS";
 export class AppStorage {
   static saveAllValues(tabs: Array<ITab>) {
     localStorage.setItem(TABS, JSON.stringify(tabs));
+    console.log("Saved")
   }
 
   static getAllValues(): Array<ITab> {

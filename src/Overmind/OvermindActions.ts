@@ -1,3 +1,5 @@
+import { AppStorage } from "../Others/AppStorage";
+import { AppUtils } from "../Others/AppUtils";
 import { Constants } from "../Others/Constants";
 import { ITab } from "../Others/Models";
 import { Context } from "./OvermindHelper";
@@ -7,11 +9,22 @@ export const setTabs = ({ state }: Context, tabs: Array<ITab>) => {
 };
 
 export const addTab = ({ state }: Context, value: ITab) => {
+  if (state.tabs.length > 0) {
+    state.tabs[state.currentTabIndex].tabContent =
+      AppUtils.getInputValue() ?? "";
+  }
+  AppStorage.saveAllValues(state.tabs);
+
   state.tabs.push(value);
   state.currentTabIndex = state.tabs.length - 1;
 };
 
 export const setTabIndex = ({ state }: Context, value: number) => {
+  if (state.tabs.length > 0) {
+    state.tabs[state.currentTabIndex].tabContent =
+      AppUtils.getInputValue() ?? "";
+  }
+  AppStorage.saveAllValues(state.tabs);
   state.currentTabIndex = value;
 };
 
