@@ -1,3 +1,4 @@
+import { AppUtils } from "../Others/AppUtils";
 import { Constants } from "../Others/Constants";
 import { ITab } from "../Others/Models";
 import { Context } from "./OvermindHelper";
@@ -13,6 +14,9 @@ export const addTab = ({ state }: Context, value: ITab) => {
 
 export const setTabIndex = ({ state }: Context, value: number) => {
   state.currentTabIndex = value;
+  setTimeout(() => {
+    AppUtils.focusInput();
+  }, 300);
 };
 
 export const setTabContent = ({ state }: Context, value: string) => {
