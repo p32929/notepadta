@@ -72,7 +72,16 @@ const TopBar: React.FC<Props> = (props) => {
                 onDeletePressed()
                 return false;
             }
+
+            if (e.key == 'w' && isCtrl == true) {
+                onDeletePressed()
+                return false;
+            }
         }
+
+        window.addEventListener("beforeunload", function (e) {
+            onSavePressed()
+        });
 
 
     }, [])
