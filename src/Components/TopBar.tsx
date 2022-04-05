@@ -25,8 +25,8 @@ const TopBar: React.FC<Props> = (props) => {
     const classes = useStyles();
 
     const onPlusPressed = () => {
-        actions.addTab(Constants.startingTab)
-        actions.setSnackbarText("New tab added")
+        actions.addTab(Constants.getStartingTab())
+        actions.setSnackbarText("Added new tab")
         AppUtils.focusInput()
     }
 
@@ -37,7 +37,10 @@ const TopBar: React.FC<Props> = (props) => {
     }
 
     const onSavePressed = () => {
-        AppStorage.saveAllValues(states.tabs)
+        AppStorage.saveAllValues({
+            tabs: states.tabs,
+            currentTabIndex: states.currentTabIndex
+        })
         actions.setSnackbarText("Saved all tabs")
     }
 
