@@ -40,6 +40,7 @@ const App: React.FC<Props> = (props) => {
   const getTabsMaxHeight = () => {
     var a = document.getElementById('toolbar') ?? { clientHeight: 0 }
     return window.innerHeight - (a?.clientHeight + 16)
+    // return `calc(100% - ${a?.clientHeight + 16})`
   }
 
   return <Grid container direction='column'>
