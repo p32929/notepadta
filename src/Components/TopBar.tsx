@@ -48,10 +48,6 @@ const TopBar: React.FC<Props> = (props) => {
         console.log("Saved")
     }
 
-    const onSettingsPressed = () => {
-        actions.setSnackbarText("Coming soon")
-    }
-
     useEffect(() => {
         var isCtrl = false;
         document.onkeyup = function (e) {
@@ -62,10 +58,6 @@ const TopBar: React.FC<Props> = (props) => {
             isCtrl = e.ctrlKey;
             if (e.key == '1' && isCtrl == true) {
                 onPlusPressed()
-                return false;
-            }
-            if (e.key == 's' && isCtrl == true) {
-                onSavePressed()
                 return false;
             }
             if (e.key == 'd' && isCtrl == true) {
@@ -90,12 +82,6 @@ const TopBar: React.FC<Props> = (props) => {
         <Toolbar>
             <Typography variant='h6' style={{ flexGrow: 1 }}>Notepadta</Typography>
 
-            {/* <Tooltip title="Settings ( Coming soon )" arrow>
-                <IconButton onClick={onSettingsPressed}>
-                    <SvgHelper path={IconPaths.cog} color='white' />
-                </IconButton>
-            </Tooltip> */}
-
             <Tooltip title="Github ( Opens github repository )" arrow>
                 <IconButton target="_blank" href='https://github.com/p32929/notepadta'>
                     <SvgHelper path={IconPaths.github} color='white' />
@@ -105,12 +91,6 @@ const TopBar: React.FC<Props> = (props) => {
             <Tooltip title="Delete ( Ctrl / Command + D )" arrow>
                 <IconButton onClick={onDeletePressed}>
                     <SvgHelper path={IconPaths.delete} color='white' />
-                </IconButton>
-            </Tooltip>
-
-            <Tooltip title="Save ( Ctrl / Command + S )" arrow>
-                <IconButton onClick={() => onSavePressed()}>
-                    <SvgHelper path={IconPaths.save} color='white' />
                 </IconButton>
             </Tooltip>
 
