@@ -52,7 +52,10 @@ export default function TabPanel(props: TabPanelProps) {
                             }
                         }}
                         multiline={true}
-                        defaultValue={states.tabs[states.currentTabIndex].tabContent}
+                        value={states.tabs[states.currentTabIndex].tabContent}
+                        onChange={(e) => {
+                            actions.setTabContent(e.target.value)
+                        }}
                     />
                 </Box>
             )}

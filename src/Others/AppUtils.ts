@@ -6,17 +6,9 @@ export class AppUtils {
     return inputValue;
   }
 
-  static onInactive(ms: number, cb: () => void) {
-    var wait = setTimeout(cb, ms);
-    document.onmousemove =
-      document.mousedown =
-      document.mouseup =
-      document.onkeydown =
-      document.onkeyup =
-      document.focus =
-        function () {
-          clearTimeout(wait);
-          wait = setTimeout(cb, ms);
-        };
+  static clearInput() {
+    try {
+      document.getElementById("input_field").value = "";
+    } catch (e) {}
   }
 }
