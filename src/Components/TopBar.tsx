@@ -36,13 +36,16 @@ const TopBar: React.FC<Props> = (props) => {
         actions.setSnackbarText("Deleted")
     }
 
-    const onSavePressed = () => {
+    const onSavePressed = (showSnack: boolean = true) => {
         if (states.tabs.length > 0) {
             actions.setTabContent(AppUtils.getInputValue() ?? "")
         }
 
         AppStorage.saveAllValues(states.tabs)
-        actions.setSnackbarText("Saved")
+        if (showSnack)
+            actions.setSnackbarText("Saved")
+
+        console.log("Saved")
     }
 
     const onSettingsPressed = () => {
@@ -69,13 +72,13 @@ const TopBar: React.FC<Props> = (props) => {
                 onDeletePressed()
                 return false;
             }
-
         }
+
 
     }, [])
 
     return <AppBar id='toolbar'>
-        <Toolbar>
+        <Toolbar >
             <Typography variant='h6' style={{ flexGrow: 1 }}>Notepadta</Typography>
 
             <Tooltip title="Settings ( Coming soon )" arrow>
@@ -91,7 +94,7 @@ const TopBar: React.FC<Props> = (props) => {
             </Tooltip>
 
             <Tooltip title="Save ( Ctrl / Command + S )" arrow>
-                <IconButton onClick={onSavePressed}>
+                <IconButton onClick={() => onSavePressed()}>
                     <SvgHelper path={IconPaths.save} color='white' />
                 </IconButton>
             </Tooltip>
