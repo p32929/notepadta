@@ -67,6 +67,10 @@ const TopBar: React.FC<Props> = (props) => {
             }
         }
 
+        window.onbeforeunload = function (e) {
+            onSavePressed()
+        };
+
     }, [])
 
     return <AppBar id='toolbar'>
