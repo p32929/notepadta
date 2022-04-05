@@ -7,6 +7,7 @@ import TopBar from './Components/TopBar';
 import AppBarOffset from './Components/AppBarOffset';
 import { AppStorage } from './Others/AppStorage';
 import { Constants } from './Others/Constants';
+import { AppUtils } from './Others/AppUtils';
 
 interface Props {
 
@@ -34,6 +35,8 @@ const App: React.FC<Props> = (props) => {
         Constants.startingTab
       ])
     }
+
+    AppUtils.focusInput()
 
   }, [])
 
@@ -74,7 +77,7 @@ const App: React.FC<Props> = (props) => {
         >
           {
             states.tabs.map((item, index) => {
-              return <Tooltip title="Double tap to rename" arrow> 
+              return <Tooltip title="Double tap to rename" arrow>
                 <Tab
                   label={item.tabName}
                   style={{

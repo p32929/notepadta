@@ -6,6 +6,7 @@ import SvgHelper from './SvgHelper';
 import { IconPaths } from '../Others/IconPaths';
 import { AppStorage } from '../Others/AppStorage';
 import { AppUtils } from '../Others/AppUtils';
+import { Constants } from '../Others/Constants';
 
 interface Props {
 
@@ -24,25 +25,20 @@ const TopBar: React.FC<Props> = (props) => {
     const classes = useStyles();
 
     const onPlusPressed = () => {
-        actions.addTab({
-            tabName: `...::: :::...`,
-            tabContent: '',
-        })
+        actions.addTab(Constants.startingTab)
         actions.setSnackbarText("New tab added")
+        AppUtils.focusInput()
     }
 
     const onDeletePressed = () => {
         actions.deleteTabIndex()
-        actions.setSnackbarText("Deleted")
+        actions.setSnackbarText("Deleted tab")
+        AppUtils.focusInput()
     }
 
     const onSavePressed = () => {
-        if (states.tabs.length > 0) {
-            actions.setTabContent(AppUtils.getInputValue() ?? "")
-        }
-
         AppStorage.saveAllValues(states.tabs)
-        actions.setSnackbarText("Saved")
+        actions.setSnackbarText("Saved all tabs")
     }
 
     const onSettingsPressed = () => {
@@ -69,7 +65,6 @@ const TopBar: React.FC<Props> = (props) => {
                 onDeletePressed()
                 return false;
             }
-
         }
 
     }, [])
