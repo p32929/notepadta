@@ -1,10 +1,10 @@
 import React from 'react'
 import { Box, Divider, Grid, makeStyles, TextField, Theme } from "@material-ui/core";
+import { useActions, useAppState } from '../Overmind/OvermindHelper';
 
 interface TabPanelProps {
     children?: React.ReactNode;
-    index: any;
-    value: any;
+    index: number;
 }
 
 const getThemeObj = (theme: Theme) => {
@@ -26,35 +26,37 @@ const getThemeObj = (theme: Theme) => {
 const useStyles = makeStyles((theme: Theme) => (getThemeObj(theme)))
 
 export default function TabPanel(props: TabPanelProps) {
-    const { children, value, index, ...other } = props;
+    const { children, index, ...other } = props;
     const classes = useStyles()
+    const actions = useActions()
+    const states = useAppState()
 
     return (
         <div
             role="tabpanel"
-            hidden={value !== index}
+            hidden={states.currentTabIndex !== index}
             className={classes.contents}
             {...other}
         >
-            {value === index && (
+            {states.currentTabIndex === index && (
                 <Box p={3} >
-                    <Grid container direction='column'>
-                        <Grid container direction='row'>
-                            
-                        </Grid>
-                        <TextField
-                            fullWidth
-                            minRows={Math.ceil(window.innerHeight / 19) - 4}
-                            id='tests'
-                            placeholder="Search..."
-                            InputProps={{
-                                disableUnderline: true,
-                                style: {
-                                    alignItems: 'flex-start',
-                                }
-                            }}
-                            multiline={true} />
-                    </Grid>
+                    <TextField
+                        id='input_field'
+                        fullWidth
+                        minRows={Math.ceil(window.innerHeight / 19) - 8}
+                        placeholder="Write your story..."
+                        InputProps={{
+                            disableUnderline: true,
+                            style: {
+                                alignItems: 'flex-start',
+                            }
+                        }}
+                        multiline={true}
+                        value={states.tabs[states.currentTabIndex].tabContent}
+                        onChange={(e) => {
+                            actions.setTabContent(e.target.value)
+                        }}
+                    />
                 </Box>
             )}
         </div>

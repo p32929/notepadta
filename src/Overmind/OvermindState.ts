@@ -1,18 +1,14 @@
+import { Constants } from "../Others/Constants";
 import { ITab } from "../Others/Models";
 
 export interface State {
-  counter: number;
   tabs: Array<ITab>;
   currentTabIndex: number;
+  snackbarText: string;
 }
 
 export const state: State = {
-  counter: 0,
-  tabs: [
-    {
-      tabName: "Tab1",
-      tabContent: "some texts",
-    },
-  ],
+  tabs: [Constants.startingTab],
   currentTabIndex: 0,
+  snackbarText: "",
 };
