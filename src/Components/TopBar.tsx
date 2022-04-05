@@ -25,7 +25,7 @@ const TopBar: React.FC<Props> = (props) => {
 
     const onPlusPressed = () => {
         actions.addTab({
-            tabName: `...::: :::...`,
+            tabName: `newtab`,
             tabContent: '',
         })
         actions.setSnackbarText("New tab added")
