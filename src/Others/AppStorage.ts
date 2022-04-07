@@ -20,10 +20,7 @@ export class AppStorage {
 
   static getAllValues(): IValues {
     let tabs = localStorage.getItem(TABS);
-    var values: IValues = JSON.parse(tabs);
-    if (values.currentTabIndex && values.tabs) {
-      return values;
-    }
-    return dummyValues;
+    var values: IValues = JSON.parse(tabs ?? JSON.stringify(dummyValues));
+    return values;
   }
 }
