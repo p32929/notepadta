@@ -26,13 +26,15 @@ const App: React.FC<Props> = (props) => {
   const classes = useStyles();
 
   useEffect(() => {
-    let values = AppStorage.getAllValues()
-    console.log(values);
-    
-    actions.setTabIndex(values.currentTabIndex)
-    actions.setTabs(values.tabs)
+    localStorage.clear()
 
-    AppUtils.focusInput()
+    // let values = AppStorage.getAllValues()
+    // console.log(values);
+    
+    // actions.setTabIndex(values.currentTabIndex)
+    // actions.setTabs(values.tabs)
+
+    // AppUtils.focusInput()
 
   }, [])
 
