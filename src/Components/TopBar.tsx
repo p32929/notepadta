@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react'
+// @ts-nocheck
+import React, { useEffect, useRef } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, Button, Divider, Grid, IconButton, Theme, Toolbar, Tooltip, Typography } from "@material-ui/core";
 import { useActions, useAppState } from '../Overmind/OvermindHelper';
@@ -44,9 +45,28 @@ const TopBar: React.FC<Props> = (props) => {
         actions.setSnackbarText("Saved all tabs")
     }
 
-    const onSettingsPressed = () => {
-        actions.setSnackbarText("Coming soon")
+    const onExportPressed = () => {
+        const text = btoa(JSON.stringify({
+            tabs: states.tabs
+        }));
+        const name = `${new Date().getTime()}.p32929`;
+        const a = document.createElement('a');
+        const type = name.split(".").pop();
+        a.href = URL.createObjectURL(new Blob([text], { type: `text/${type === "txt" ? "plain" : type}` }));
+        a.download = name;
+        a.click();
     }
+
+    const onImportPressed = () => {
+        if (fileInputRef != null) {
+            // @ts-ignore
+            fileInputRef.current.click();
+        }
+    }
+
+    // const onSettingsPressed = () => {
+    //     actions.setSnackbarText("Coming soon")
+    // }
 
     useEffect(() => {
         var isCtrl = false;
@@ -76,13 +96,42 @@ const TopBar: React.FC<Props> = (props) => {
 
     }, [])
 
+    const fileInputRef = useRef(null)
+
+
     return <AppBar id='toolbar'>
         <Toolbar>
+
+            <input onChange={(e) => {
+                var file = e.target.files[0]
+                const reader = new FileReader()
+                reader.onload = async (e) => {
+                    try {
+                        const text = (e.target.result)
+                        console.log(text)
+                        const data = JSON.parse(atob(text))
+                        console.log(data.tabs)
+                        actions.setTabs(data.tabs)
+                    }
+                    catch (e) {
+                        console.log(e)
+                    }
+                };
+                reader.readAsText(file)
+
+            }} type='file' accept=".p32929" id='file' ref={fileInputRef} style={{ display: 'none' }} />
+
             <Typography variant='h6' style={{ flexGrow: 1 }}>Notepadta</Typography>
 
-            <Tooltip title="Settings ( Coming soon )" arrow>
-                <IconButton onClick={onSettingsPressed}>
-                    <SvgHelper path={IconPaths.cog} color='white' />
+            <Tooltip title="Import" arrow>
+                <IconButton onClick={onImportPressed}>
+                    <SvgHelper path={IconPaths.import} color='white' />
+                </IconButton>
+            </Tooltip>
+
+            <Tooltip title="Export" arrow>
+                <IconButton onClick={onExportPressed}>
+                    <SvgHelper path={IconPaths.export} color='white' />
                 </IconButton>
             </Tooltip>
 
