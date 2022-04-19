@@ -49,7 +49,7 @@ const TopBar: React.FC<Props> = (props) => {
         const text = btoa(JSON.stringify({
             tabs: states.tabs
         }));
-        const name = `${new Date().getTime()}.p32929`;
+        const name = `${new Date().getTime()}.txt`;
         const a = document.createElement('a');
         const type = name.split(".").pop();
         a.href = URL.createObjectURL(new Blob([text], { type: `text/${type === "txt" ? "plain" : type}` }));
@@ -119,9 +119,15 @@ const TopBar: React.FC<Props> = (props) => {
                 };
                 reader.readAsText(file)
 
-            }} type='file' accept=".p32929" id='file' ref={fileInputRef} style={{ display: 'none' }} />
+            }} type='file' accept=".txt" id='file' ref={fileInputRef} style={{ display: 'none' }} />
 
-            <Typography variant='h6' style={{ flexGrow: 1 }}>Notepadta</Typography>
+            <Typography variant='h6' style={{ flexGrow: 1 }}>Fanote.xyz</Typography>
+
+            {/* <Tooltip title="Help" arrow>
+                <IconButton onClick={onImportPressed}>
+                    <SvgHelper path={IconPaths.help} color='white' />
+                </IconButton>
+            </Tooltip> */}
 
             <Tooltip title="Import" arrow>
                 <IconButton onClick={onImportPressed}>
