@@ -129,25 +129,25 @@ const TopBar: React.FC<Props> = (props) => {
                 </IconButton>
             </Tooltip> */}
 
-            <Tooltip title="Import" arrow>
+            <Tooltip title="Import notes" arrow>
                 <IconButton onClick={onImportPressed}>
                     <SvgHelper path={IconPaths.import} color='white' />
                 </IconButton>
             </Tooltip>
 
-            <Tooltip title="Export" arrow>
+            <Tooltip title="Export notes" arrow>
                 <IconButton onClick={onExportPressed}>
                     <SvgHelper path={IconPaths.export} color='white' />
                 </IconButton>
             </Tooltip>
 
-            <Tooltip title="Delete ( Ctrl / Command + D )" arrow>
+            <Tooltip title="Delete tab ( Ctrl / Command + D )" arrow>
                 <IconButton onClick={onDeletePressed}>
                     <SvgHelper path={IconPaths.delete} color='white' />
                 </IconButton>
             </Tooltip>
 
-            <Tooltip title="Save ( Ctrl / Command + S )" arrow>
+            <Tooltip title="Save notes ( Ctrl / Command + S )" arrow>
                 <IconButton onClick={onSavePressed}>
                     <SvgHelper path={IconPaths.save} color='white' />
                 </IconButton>

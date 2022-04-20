@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, Divider, Grid, Tab, Tabs, Theme, Tooltip } from "@material-ui/core";
 import { useActions, useAppState } from '../Overmind/OvermindHelper';
@@ -16,8 +16,8 @@ const useStyles = makeStyles((theme: Theme) => (getThemeObj(theme)))
 const AllTabs: React.FC<Props> = (props) => {
     const actions = useActions()
     const states = useAppState()
-
     const classes = useStyles();
+    const [isTooltipShowing, setShowTooltip] = useState(false)
 
     const getTabsMaxHeight = () => {
         var a = document.getElementById('toolbar') ?? { clientHeight: 0 }
@@ -41,12 +41,23 @@ const AllTabs: React.FC<Props> = (props) => {
         >
             {
                 states.tabs.map((item, index) => {
-                    return <Tooltip title="Double tap to rename" arrow>
+
+                    return <Tooltip
+                        open={isTooltipShowing && states.currentTabIndex == index}
+                        title="Double tap to rename" arrow>
                         <Tab
+                            onMouseEnter={() => {
+                                if (states.currentTabIndex == index)
+                                    setShowTooltip(true)
+                            }} onMouseLeave={() => {
+                                console.log("On mouse leave")
+                                setShowTooltip(false)
+                            }}
                             label={item.tabName}
                             style={{
-                                backgroundColor: states.currentTabIndex == index ? '#4CAF50' : 'white',
+                                backgroundColor: states.currentTabIndex == index ? '#2196F3' : 'white',
                                 color: states.currentTabIndex == index ? 'white' : 'black',
+                                fontWeight: 'bold'
                             }}
                             onClick={(e) => {
                                 actions.setTabIndex(index)
