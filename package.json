@@ -1,6 +1,6 @@
 {
   "name": "notepadta",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.12.3",
@@ -25,7 +25,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "tauri": "tauri"
+    "tauri": "tauri",
+    "tauricon": "tauricon"
   },
   "eslintConfig": {
     "extends": [
@@ -46,6 +47,7 @@
     ]
   },
   "devDependencies": {
-    "@tauri-apps/cli": "^1.0.0-rc.8"
+    "@tauri-apps/cli": "^1.0.0-rc.8",
+    "@tauri-apps/tauricon": "github:tauri-apps/tauricon"
   }
 }
