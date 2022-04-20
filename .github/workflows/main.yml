@@ -6,7 +6,7 @@ env:
 
 jobs:
   create-release:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-18.04
     outputs:
       RELEASE_UPLOAD_ID: ${{ steps.create_release.outputs.id }}
 
@@ -34,7 +34,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: [macos-11, ubuntu-20.04, windows-2022]
+        platform: [macos-10.15, ubuntu-18.04, windows-2019]
 
     runs-on: ${{ matrix.platform }}
     steps:
