@@ -44,7 +44,7 @@ const AllTabs: React.FC<Props> = (props) => {
 
                     return <Tooltip
                         open={isTooltipShowing && states.currentTabIndex == index}
-                        title="Double tap to rename" arrow>
+                        title="Double click to rename" arrow>
                         <Tab
                             onMouseEnter={() => {
                                 if (states.currentTabIndex == index)
