@@ -121,7 +121,9 @@ const TopBar: React.FC<Props> = (props) => {
 
             }} type='file' accept=".txt" id='file' ref={fileInputRef} style={{ display: 'none' }} />
 
-            <Typography variant='h6' style={{ flexGrow: 1 }}>Fanote.xyz</Typography>
+            <Typography onClick={() => {
+                window.location.reload()
+            }} variant='h6' style={{ flexGrow: 1, cursor: 'pointer' }}>Fanote.xyz</Typography>
 
             {/* <Tooltip title="Help" arrow>
                 <IconButton onClick={onImportPressed}>
