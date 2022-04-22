@@ -49,7 +49,8 @@ const AllTabs: React.FC<Props> = (props) => {
                             onMouseEnter={() => {
                                 if (states.currentTabIndex == index)
                                     setShowTooltip(true)
-                            }} onMouseLeave={() => {
+                            }}
+                            onMouseLeave={() => {
                                 console.log("On mouse leave")
                                 setShowTooltip(false)
                             }}
@@ -63,10 +64,12 @@ const AllTabs: React.FC<Props> = (props) => {
                                 actions.setTabIndex(index)
                             }}
                             onDoubleClick={() => {
-                                let newName = prompt("New tab name")
-                                if (newName) {
-                                    actions.changeTabName(newName)
-                                    actions.setSnackbarText("Tab renamed")
+                                if (states.currentTabIndex == index) {
+                                    let newName = prompt("New tab name")
+                                    if (newName) {
+                                        actions.changeTabName(newName)
+                                        actions.setSnackbarText("Tab renamed")
+                                    }
                                 }
                             }}
                         />
