@@ -39,45 +39,43 @@ const AllTabs: React.FC<Props> = (props) => {
                 },
             }}
         >
-            <>
-                {
-                    states.tabs.map((item, index) => {
+            {
+                states.tabs.map((item, index) => {
 
-                        return <Tooltip
-                            open={isTooltipShowing && states.currentTabIndex == index}
-                            title="Double click to rename" arrow>
-                            <Tab
-                                onMouseEnter={() => {
-                                    if (states.currentTabIndex == index)
-                                        setShowTooltip(true)
-                                }}
-                                onMouseLeave={() => {
-                                    console.log("On mouse leave")
-                                    setShowTooltip(false)
-                                }}
-                                label={item.tabName}
-                                style={{
-                                    backgroundColor: states.currentTabIndex == index ? '#2196F3' : 'white',
-                                    color: states.currentTabIndex == index ? 'white' : 'black',
-                                    fontWeight: 'bold'
-                                }}
-                                onClick={(e) => {
-                                    actions.setTabIndex(index)
-                                }}
-                                onDoubleClick={() => {
-                                    if (states.currentTabIndex == index) {
-                                        let newName = prompt("New tab name")
-                                        if (newName) {
-                                            actions.changeTabName(newName)
-                                            actions.setSnackbarText("Tab renamed")
-                                        }
+                    return <Tooltip
+                        open={isTooltipShowing && states.currentTabIndex == index}
+                        title="Double click to rename" arrow>
+                        <Tab
+                            onMouseEnter={() => {
+                                if (states.currentTabIndex == index)
+                                    setShowTooltip(true)
+                            }}
+                            onMouseLeave={() => {
+                                console.log("On mouse leave")
+                                setShowTooltip(false)
+                            }}
+                            label={item.tabName}
+                            style={{
+                                backgroundColor: states.currentTabIndex == index ? '#2196F3' : 'white',
+                                color: states.currentTabIndex == index ? 'white' : 'black',
+                                fontWeight: 'bold'
+                            }}
+                            onClick={(e) => {
+                                actions.setTabIndex(index)
+                            }}
+                            onDoubleClick={() => {
+                                if (states.currentTabIndex == index) {
+                                    let newName = prompt("New tab name")
+                                    if (newName) {
+                                        actions.changeTabName(newName)
+                                        actions.setSnackbarText("Tab renamed")
                                     }
-                                }}
-                            />
-                        </Tooltip>
-                    })
-                }
-            </>
+                                }
+                            }}
+                        />
+                    </Tooltip>
+                })
+            }
         </Tabs>
     </Grid>
 
