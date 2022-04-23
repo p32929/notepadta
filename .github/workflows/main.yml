@@ -1,108 +1,61 @@
-name: Release Artifacts
-on:
-  push:
-    branches:
-      - master
+name: "test-on-pr"
+on: [pull_request]
+
 env:
-  CARGO_TERM_COLOR: always
   CI: false
-  RUST_BACKTRACE: short
 
 jobs:
-  release:
-    name: Publish on GitHub
-    runs-on: ${{ matrix.os }}
+  create-release:
+    runs-on: ubuntu-latest
+    outputs:
+      RELEASE_UPLOAD_ID: ${{ steps.create_release.outputs.id }}
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16
+      - name: get version
+        run: echo "PACKAGE_VERSION=$(node -p "require('./package.json').version")" >> $GITHUB_ENV
+      - name: create release
+        id: create_release
+        uses: actions/create-release@v1.1.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: app-v${{ env.PACKAGE_VERSION }}
+          release_name: "Desktop app v${{ env.PACKAGE_VERSION }}"
+          body: "See the assets to download this version and install."
+          draft: true
+          prerelease: false
+  build-tauri:
+    needs: create-release
     strategy:
       fail-fast: false
       matrix:
-        build: [linux, macos, windows]
-        include:
-          - build: linux
-            os: ubuntu-latest
-            target: x86_64-unknown-linux-gnu
-          - build: macos
-            os: macos-latest
-            target: x86_64-apple-darwin
-          - build: windows
-            os: windows-latest
-            target: x86_64-pc-windows-msvc
+        platform: [macos-latest, ubuntu-latest, windows-latest]
 
+    runs-on: ${{ matrix.platform }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Install dependencies
-        if: matrix.os == 'ubuntu-latest'
-        run: |
-          sudo apt-get update
-          sudo apt-get install \
-            --allow-unauthenticated -y -qq \
-              libgtk-3-dev \
-              webkit2gtk-4.0 \
-              libappindicator3-dev \
-              librsvg2-dev patchelf
-      - name: Install node
-        uses: actions/setup-node@v2
-
-      - name: Install Rust
+      - uses: actions/checkout@v2
+      - name: setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16
+      - name: install Rust stable
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
-          target: ${{ matrix.target }}
-          override: true
-          profile: minimal
-
-      - name: Build CLI
-        working-directory: cli
-        shell: bash
+      - name: install dependencies (ubuntu only)
+        if: matrix.platform == 'ubuntu-latest'
         run: |
-          cargo build --verbose --locked \
-            --release --target ${{ matrix.target }}
-      - name: Build GUI
-        working-directory: gui
-        shell: bash
-        run: |
-          yarn install --ignore-engines
-          yarn tauri info
-          CI=true yarn tauri build --target ${{ matrix.target }}
-      - name: Prepare artifacts [Unix]
-        shell: bash
-        if: matrix.os != 'windows-latest'
-        run: |
-          release_dir="fish-launcher"
-          mkdir $release_dir
-          for bin in 'fish-launcher' 'fish-launcher-cli'; do
-            cp "target/${{ matrix.target }}/release/$bin" $release_dir/
-            strip "$release_dir/$bin" || true
-          done
-          tar -czvf "fish-launcher-${{ matrix.build }}.tar.gz" $release_dir/
-          if [ "${{ matrix.os }}" = "ubuntu-latest" ]; then
-            bundles=("deb" "AppImage")
-          else
-            bundles=("app" "dmg")
-          fi
-          for bundle in "${bundles[@]}"; do
-            mv "target/${{ matrix.target }}/release"/bundle/*/fish-launcher*.$bundle \
-              "fish-launcher-${{ matrix.build }}.$bundle"
-          done
-      - name: Prepare artifacts [Windows]
-        shell: bash
-        if: matrix.os == 'windows-latest'
-        run: |
-          release_dir="fish-launcher"
-          mkdir $release_dir
-          for bin in 'fish-launcher.exe' 'fish-launcher-cli.exe'; do
-            cp "target/${{ matrix.target }}/release/$bin" $release_dir/
-            strip "$release_dir/$bin"
-          done
-          7z a -tzip "fish-launcher-${{ matrix.build }}.zip" $release_dir/
-          mv "target/${{ matrix.target }}/release"/bundle/*/fish-launcher*.msi \
-            "fish-launcher-${{ matrix.build }}.msi"
-      - name: Publish release
-        uses: svenstaro/upload-release-action@v2
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
+      - name: install app dependencies and build it
+        run: yarn && yarn build
+      - uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          file: fish-launcher-${{ matrix.build }}*
-          file_glob: true
-          overwrite: true
-          tag: ${{ github.ref }}
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          releaseId: ${{ needs.create-release.outputs.RELEASE_UPLOAD_ID }}
