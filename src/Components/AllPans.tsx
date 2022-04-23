@@ -21,17 +21,19 @@ const AllPans: React.FC<Props> = (props) => {
     const classes = useStyles();
 
     return <Grid container item xs>
-        {
-            states.tabs.map((item, index) => {
-                return <TabPanel
-                    index={index}
-                >
-                    {
-                        item.tabContent
-                    }
-                </TabPanel>
-            })
-        }
+        <>
+            {
+                states.tabs.map((item, index) => {
+                    return <TabPanel
+                        index={index}
+                    >
+                        {
+                            item.tabContent
+                        }
+                    </TabPanel>
+                })
+            }
+        </>
     </Grid>
 
 }
