@@ -1,6 +1,7 @@
 import React from 'react'
 import { Box, Divider, Grid, makeStyles, TextField, Theme } from "@material-ui/core";
 import { useActions, useAppState } from '../Overmind/OvermindHelper';
+import { AppStorage } from '../Others/AppStorage';
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -24,6 +25,7 @@ const getThemeObj = (theme: Theme) => {
 }
 
 const useStyles = makeStyles((theme: Theme) => (getThemeObj(theme)))
+let timeoutId: any = null
 
 export default function TabPanel(props: TabPanelProps) {
     const { children, index, ...other } = props;
@@ -55,6 +57,15 @@ export default function TabPanel(props: TabPanelProps) {
                         value={states.tabs[states.currentTabIndex].tabContent}
                         onChange={(e) => {
                             actions.setTabContent(e.target.value)
+                            if (timeoutId)
+                                clearTimeout(timeoutId);
+
+                            timeoutId = setTimeout(function () {
+                                AppStorage.saveAllValues({
+                                    tabs: states.tabs,
+                                    currentTabIndex: states.currentTabIndex
+                                })
+                            }, 1000);
                         }}
                     />
                 </Box>
