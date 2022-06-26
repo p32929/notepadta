@@ -149,11 +149,11 @@ const TopBar: React.FC<Props> = (props) => {
                 </IconButton>
             </Tooltip>
 
-            <Tooltip title="Save notes ( Ctrl / Command + S )" arrow>
+            {/* <Tooltip title="Save notes ( Ctrl / Command + S )" arrow>
                 <IconButton onClick={onSavePressed}>
                     <SvgHelper path={IconPaths.save} color='white' />
                 </IconButton>
-            </Tooltip>
+            </Tooltip> */}
 
             <Tooltip title="Add new tab ( Ctrl / Command + 1 )" arrow>
                 <IconButton onClick={onPlusPressed}>
